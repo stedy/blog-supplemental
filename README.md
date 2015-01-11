@@ -1,2 +1,2 @@
 # blog-supplemental
-Supplemental material for stedy.github.io
+Supplemental material for blog at http://stedy.github.io
