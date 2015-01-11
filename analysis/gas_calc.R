@@ -1,6 +1,6 @@
 library(plyr)
 library(ggplot2)
-raw <- read.csv("gas2014.csv")
+raw <- read.csv("data/gas2014.csv")
 avediff <- diff(raw$Mileage)
 raw$totalmiles <- c(NA, avediff)
 raw$Avgcost <- raw$totalmiles / raw$TotalCost

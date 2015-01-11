@@ -3,8 +3,8 @@ library(plyr)
 library(tidyr)
 library(lubridate)
 
-beer <- read.csv("bars_2014.csv", na.strings="")
-run <- read.csv("run_2014.csv")
+beer <- read.csv("data/bars_2014.csv", na.strings="")
+run <- read.csv("data/run_2014.csv")
 
 beerm <- ddply(beer, "date", function(x) data.frame(count=length(unique(na.omit(x$name)))))
 final <- merge(beerm, run)

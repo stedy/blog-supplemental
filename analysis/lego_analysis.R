@@ -1,7 +1,7 @@
 library(plyr)
 library(ggplot2)
 
-raw <- read.csv("LEGO.csv", header=T)
+raw <- read.csv("data/LEGO.csv", header=T)
 raw$estimated.price <- raw$pieces / 10
 raw$estimated.price.adjusted <- raw$pieces / 19
 
