@@ -5,10 +5,37 @@ library(ggplot2)
 pac12_teams <- c("USC", "UCLA", "Arizona", "Arizona State", "Stanford", "California",
            "Utah", "Colorado", "Washington State", "Oregon State", "Oregon")
 
-season2015 <- 
+season2017 <-
+  read_html("https://en.wikipedia.org/wiki/2017_Washington_Huskies_football_team") %>%
+  html_nodes("table") %>%
+  .[[7]] %>%
+  html_table(trim=T, fill = T) %>%
+  data.frame(.) %>%
+  subset(grepl("Husky", Site)) %>%
+  mutate(opponent = stringr::str_match(`Opponent.`, paste(pac12_teams, collapse="|")),
+         date = as.Date(paste0(Date, " 2017"), "B %d %Y"),
+         season = "2017",
+         game_order = 1:nrow(.)) %>%
+  select(date, Attendance, season, game_order, opponent, TV)
+
+season2016 <-
+  read_html("https://en.wikipedia.org/wiki/2016_Washington_Huskies_football_team") %>%
+  html_nodes("table") %>%
+  .[[8]] %>%
+  html_table(trim=T, fill = T) %>%
+  data.frame(.) %>%
+  subset(grepl("Husky", Site)) %>%
+  mutate(opponent = stringr::str_match(`Opponent.`, paste(pac12_teams, collapse="|")),
+         date = as.Date(paste0(Date, " 2016"), "%B %d %Y"),
+         season = "2016",
+         game_order = 1:nrow(.)) %>%
+  select(date, Attendance, season, game_order, opponent, TV)
+
+season2015 <-
   read_html("https://en.wikipedia.org/wiki/2015_Washington_Huskies_football_team") %>%
-  html_nodes(xpath="/html/body/div[3]/div[3]/div[4]/table[6]") %>%
-  html_table(fill = T) %>%
+  html_nodes("table") %>%
+  .[[9]] %>%
+  html_table(trim = T, fill = T) %>%
   data.frame(.) %>%
   subset(grepl("Husky", Site)) %>%
   mutate(opponent = stringr::str_match(`Opponent.`, paste(pac12_teams, collapse="|")),
@@ -19,8 +46,9 @@ season2015 <-
 
 season2014 <-
   read_html("https://en.wikipedia.org/wiki/2014_Washington_Huskies_football_team") %>%
-  html_nodes(xpath="/html/body/div[3]/div[3]/div[4]/table[6]") %>%
-  html_table(fill = T) %>%
+  html_nodes("table") %>%
+  .[[9]] %>%
+  html_table(trim = T, fill = T) %>%
   data.frame(.) %>%
   subset(grepl("Husky", Site)) %>%
   mutate(opponent = stringr::str_match(`Opponent.`, paste(pac12_teams, collapse="|")),
@@ -31,8 +59,9 @@ season2014 <-
 
 season2013 <-
   read_html("https://en.wikipedia.org/wiki/2013_Washington_Huskies_football_team") %>%
-  html_nodes(xpath="/html/body/div[3]/div[3]/div[4]/table[5]") %>%
-  html_table(fill = T) %>%
+  html_nodes("table") %>%
+  .[[8]] %>%
+  html_table(trim =T, fill = T) %>%
   data.frame(.) %>%
   subset(grepl("Husky", Site)) %>%
   mutate(opponent = stringr::str_match(`Opponent.`, paste(pac12_teams, collapse="|")),
@@ -43,8 +72,9 @@ season2013 <-
 
 season2012 <-
   read_html("https://en.wikipedia.org/wiki/2012_Washington_Huskies_football_team") %>%
-  html_nodes(xpath="/html/body/div[3]/div[3]/div[4]/table[3]") %>%
-  html_table(fill = T) %>%
+  html_nodes("table") %>%
+  .[[3]] %>%
+  html_table(trim = T, fill = T) %>%
   data.frame(.) %>%
   subset(grepl("CenturyLink Field", Site)) %>%
   mutate(opponent = stringr::str_match(`Opponent.`, paste(pac12_teams, collapse="|")),
@@ -55,8 +85,9 @@ season2012 <-
 
 season2011 <-
   read_html("https://en.wikipedia.org/wiki/2011_Washington_Huskies_football_team") %>%
-  html_nodes(xpath="/html/body/div[3]/div[3]/div[4]/table[3]") %>%
-  html_table(fill = T) %>%
+  html_nodes("table") %>%
+  .[[3]] %>%
+  html_table(trim = T, fill = T) %>%
   data.frame(.) %>%
   subset(grepl(paste(c("CenturyLink Field", "Husky Stadium"), collapse="|"), Site)) %>%
   mutate(opponent = stringr::str_match(`Opponent.`, paste(pac12_teams, collapse="|")),
@@ -68,8 +99,9 @@ season2011$Attendance <- sapply(strsplit(season2011$Attendance, "\\["), "[", 1)
 
 season2010 <-
   read_html("https://en.wikipedia.org/wiki/2010_Washington_Huskies_football_team") %>%
-  html_nodes(xpath="/html/body/div[3]/div[3]/div[4]/table[3]") %>%
-  html_table(fill = T) %>%
+  html_nodes("table") %>%
+  .[[3]] %>%
+  html_table(trim = T, fill = T) %>%
   data.frame(.) %>%
   subset(grepl("Husky Stadium", Site)) %>%
   mutate(opponent = stringr::str_match(`Opponent.`, paste(pac12_teams, collapse="|")),
@@ -81,8 +113,9 @@ season2010$Attendance <- sapply(strsplit(season2010$Attendance, "\\["), "[", 1)
 
 season2009 <-
   read_html("https://en.wikipedia.org/wiki/2009_Washington_Huskies_football_team") %>%
-  html_nodes(xpath="/html/body/div[3]/div[3]/div[4]/table[3]") %>%
-  html_table(fill = T) %>%
+  html_nodes("table") %>%
+  .[[3]] %>%
+  html_table(trim = T, fill = T) %>%
   data.frame(.) %>%
   subset(grepl("Husky Stadium", Site)) %>%
   mutate(opponent = stringr::str_match(`Opponent.`, paste(pac12_teams, collapse="|")),
@@ -94,8 +127,9 @@ season2009$Attendance <- sapply(strsplit(season2009$Attendance, "\\["), "[", 1)
 
 season2008 <-
   read_html("https://en.wikipedia.org/wiki/2008_Washington_Huskies_football_team") %>%
-  html_nodes(xpath="/html/body/div[3]/div[3]/div[4]/table[3]") %>%
-  html_table(fill = T) %>%
+  html_nodes("table") %>%
+  .[[3]] %>%
+  html_table(trim =T, fill = T) %>%
   data.frame(.) %>%
   subset(grepl("Husky Stadium", Site)) %>%
   mutate(opponent = stringr::str_match(Opponent, paste(pac12_teams, collapse="|")),
@@ -105,41 +139,33 @@ season2008 <-
   select(date, Attendance, season, game_order, opponent, TV)
 season2008$Attendance <- sapply(strsplit(season2008$Attendance, "\\["), "[", 1)
 
-forplot <- rbind.data.frame(season2015, season2014, season2013, season2012, season2011,
+forplot <- rbind.data.frame(season2017, season2016, season2015, season2014,
+                            season2013, season2012, season2011,
                             season2010, season2009, season2008)
 forplot$opponent <- as.character(forplot$opponent)
 forplot$Attendance = as.numeric(gsub(",", "", forplot$Attendance))
+forplot$TV <- ifelse(forplot$TV == "P12N", "P12N", "other")
 
-#first look at TV
 p <- ggplot(forplot, aes(x=date, y=Attendance, group=TV))
 p + geom_point(aes(color=TV, size=TV)) +
-  scale_size_manual(values = c(rep(2,9), 3, 2, 2), guide="none") + 
   theme(legend.key.size= unit(20, "point"),
         legend.text=element_text(size=12)) +
   labs(x="Game date", y = "Total Attendance") +
-  ggtitle("University of Washington home football game attendance by TV channel")
-ggsave("UW_football_attendance_by_TV.png", width=7, height=5, units="in")
+  ggtitle("University of Washington home football game attendance stratified by TV channel") + 
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("UW_football_attendance_by_TV_2008-17.png", width=7, height=5, units="in")
 
-#Then Pac-12 only
+#Pac10/Pac12 only
 
-forplot$opponent <- ifelse(forplot$date == "2015-09-19", NA, forplot$opponent)
-forplot <- forplot %>% subset(!is.na(opponent))
-
-p <- ggplot(forplot, aes(x=game_order, y=Attendance, group=season))
-p + geom_smooth(aes(color=season)) +
-  labs(x="Home game number", y = "Total Attendance") +
-  ggtitle("University of Washington home football game attendance")
-ggsave("UW_football_total_attendance.png", width=7, height=5, units="in")
- 
-forplot$capacity <- ifelse(forplot$date < as.Date("2011-11-26"), 72500, ifelse(forplot$date >= as.Date("2013-08-31"), 70138, 67000))
-
-p <- ggplot(forplot, aes(x=game_order, y=Attendance/capacity, group=season))
-p + stat_smooth(aes(color=season)) +
-  labs(x="Home game number", y = "Percentage of capacity") +
-  ggtitle("University of Washington home football game attendance")
-ggsave("UW_football_percentage_capacity.png", width=7, height=5, units="in")
-
-counts <- forplot %>%
-  group_by(opponent) %>%
-  do(data.frame(mean_attendance = mean(.$Attendance))) %>%
-  arrange(desc(mean_attendance))
+forplot_pac <- forplot %>%
+  subset(complete.cases(.))
+p <- ggplot(forplot_pac, aes(x=date, y=Attendance, group=TV))
+p + geom_point(aes(color=TV, size=TV)) +
+  theme(legend.key.size= unit(20, "point"),
+        legend.text=element_text(size=12)) +
+  labs(x="Game date", y = "Total Attendance",
+  title = "University of Washington home football game attendance stratified by TV channel",
+  subtitle = "Pac-10/Pac-12 Teams only") + 
+  theme(plot.title = element_text(hjust = 0.5),
+        plot.subtitle=element_text(hjust=0.5))
+ggsave("UW_football_attendance_by_TV_2008-17_Pac12_only.png", width=7, height=5, units="in")
