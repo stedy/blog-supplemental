@@ -151,7 +151,7 @@ p + geom_point(aes(color=TV, size=TV)) +
   theme(legend.key.size= unit(20, "point"),
         legend.text=element_text(size=12)) +
   labs(x="Game date", y = "Total Attendance") +
-  ggtitle("University of Washington home football game attendance stratified by TV channel") + 
+  ggtitle("University of Washington home football game attendance stratified by TV channel") +
   theme(plot.title = element_text(hjust = 0.5))
 ggsave("UW_football_attendance_by_TV_2008-17.png", width=7, height=5, units="in")
 
@@ -165,7 +165,7 @@ p + geom_point(aes(color=TV, size=TV)) +
         legend.text=element_text(size=12)) +
   labs(x="Game date", y = "Total Attendance",
   title = "University of Washington home football game attendance stratified by TV channel",
-  subtitle = "Pac-10/Pac-12 Teams only") + 
+  subtitle = "Pac-10/Pac-12 Teams only") +
   theme(plot.title = element_text(hjust = 0.5),
         plot.subtitle=element_text(hjust=0.5))
 ggsave("UW_football_attendance_by_TV_2008-17_Pac12_only.png", width=7, height=5, units="in")
